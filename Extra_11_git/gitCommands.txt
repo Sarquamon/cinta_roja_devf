@@ -1,0 +1,4 @@
+git remote -v
+git remote add origin
+
+git push origin master origin a la ruta y master a que rama
