@@ -15,6 +15,7 @@ class Main extends Component {
       income: ""
     };
   }
+
   componentDidMount() {
     axios
       .get("https://escuela-parte1.herokuapp.com/all/graduate")
@@ -22,14 +23,20 @@ class Main extends Component {
         this.setState({
           Exalumnos: result.data
         });
-        // console.log(this.state.Exalumnos);
       })
       .catch(err => console.log(err));
   }
+
+  redirect = id => {
+    this.props.history.push(`/Exalumno/${id}`);
+  };
+
   renderExalumnos() {
     if (this.state.Exalumnos.length !== 0) {
       const exalumno = this.state.Exalumnos.map((alumno, index) => {
-        return <CardAlumno alumno={alumno} key={index} />;
+        return (
+          <CardAlumno alumno={alumno} redirect={this.redirect} key={index} />
+        );
       });
       return exalumno;
     } else {
@@ -70,75 +77,85 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div className="row justify-content-center">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <h3>Registrar un nuevo usuario</h3>
+
             <form onSubmit={this.onFormSubmit}>
               <div className="form-group">
-                <label htmlFor="">Nombre:</label>
+                <label className="" htmlFor="inputName">
+                  Nombre:
+                </label>
                 <input
+                  className="form-control"
                   type="text"
                   name="nombre"
-                  placeholder=""
+                  placeholder="Ponga su nombre"
                   value={this.state.nombre}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputName"
                 />
               </div>
+
               <div className="form-group">
-                <label htmlFor="">Carrera:</label>
+                <label htmlFor="inputCarrera">Carrera:</label>
                 <input
                   type="text"
                   name="carrera"
                   placeholder=""
                   value={this.state.carrera}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputCarrera"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Edad:</label>
+                <label htmlFor="inputAge">Edad:</label>
                 <input
                   type="text"
                   name="age"
                   placeholder=""
                   value={this.state.age}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputAge"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Generaci&oacute;</label>
+                <label htmlFor="inputGeneration">Generaci&oacute;n:</label>
                 <input
                   type="text"
                   name="generation"
                   placeholder=""
                   value={this.state.generation}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputGeneration"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Puesto:</label>
+                <label htmlFor="inputCurrentJob">Puesto:</label>
                 <input
                   type="text"
                   name="currentJob"
                   placeholder=""
                   value={this.statecurrentJob}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputCurrentJob"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="">Sueldo:</label>
+                <label htmlFor="inputIncome">Sueldo:</label>
                 <input
                   type="text"
                   name="income"
                   placeholder=""
                   value={this.state.income}
                   onChange={this.onInputCheck}
-                  id=""
+                  id="inputIncome"
+                  className="form-control"
                 />
               </div>
               <button type="submit" className="btn btn-success btn-block">
@@ -147,8 +164,13 @@ class Main extends Component {
             </form>
           </div>
         </div>
+        <hr />
         <h3>Exalumnos registrados</h3>
-        <div className="row">{this.renderExalumnos()}</div>
+        <div className="row">
+          <div className="container">
+            <div className="col-md-12">{this.renderExalumnos()}</div>
+          </div>
+        </div>
       </div>
     );
   }
